@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RxJS Basics</title>
+</head>
+<body>
+<script type="text/javascript" src="https://unpkg.com/@reactivex/rxjs@5.0.0-beta.12/dist/global/Rx.js"></script>
+
+<script type="text/javascript">
+	const observable = Rx.Observable.interval(1000);
+
+	const observer = {
+		next: value => console.log('From observer: ', value)
+	};
+
+	observable
+		.filter(value => value % 2 === 0)
+		.subscribe(observer);
+</script>
+</body>
+</html>

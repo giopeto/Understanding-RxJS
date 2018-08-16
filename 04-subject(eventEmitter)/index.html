@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RxJS Basics</title>
+</head>
+<body>
+<script type="text/javascript" src="https://unpkg.com/@reactivex/rxjs@5.0.0-beta.12/dist/global/Rx.js"></script>
+
+<script type="text/javascript">
+	var subject = new Rx.Subject();
+
+	subject.subscribe({
+		next: value => console.log('Subscribe 1: ', value),
+		error: error => console.log(error),
+		complete: () => console.log('Completed')
+	});
+
+	subject.subscribe({
+		next: value => console.log('Subscribe 2: ', value)
+	});
+
+	/* Emit data to all subscribers */
+	subject.next('A new data');
+	//subject.error('Error'); // Can call error
+	subject.complete('Error'); // or complete
+</script>
+</body>
+</html>

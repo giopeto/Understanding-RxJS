@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RxJS Behavior subject</title>
+</head>
+<body>
+<script type="text/javascript" src="https://unpkg.com/@reactivex/rxjs@5.0.0-beta.12/dist/global/Rx.js"></script>
+	<button>Click me</button>
+	<div></div>
+<script type="text/javascript">
+	
+	var clickEmitted = new Rx.BehaviorSubject('Not clicked');
+	var button = document.querySelector('button');
+	var div = document.querySelector('div');
+
+	button.addEventListener('click', () => clickEmitted.next('Clicked!'));
+
+	clickEmitted.subscribe(
+		value => div.textContent = value
+	);
+
+</script>
+</body>
+</html>

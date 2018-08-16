@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RxJS Basics</title>
+</head>
+<body>
+	<button>Click me</button>
+<script type="text/javascript" src="https://unpkg.com/@reactivex/rxjs@5.0.0-beta.12/dist/global/Rx.js"></script>
+
+<script type="text/javascript">
+	
+	const button = document.querySelector('button');
+
+	const observer = {
+		next: value => console.log('From observer: ',value),
+		error: error => console.log('From observer: ',error),
+		complete: () => console.log('From observer: ', 'Completed')
+	};
+
+	/* Create simple observable that emit strings */
+	Rx.Observable.create(obs => {
+		obs.next('A value');
+		//obs.error('This emit error');
+		setTimeout(() => obs.complete(), 2000);
+		obs.next('A value after error/complete');
+	}).subscribe(observer);
+
+	/* Create observable from click event*/
+	var subscription = Rx.Observable.create(obs => {
+		button.onclick = event => obs.next(event);
+	}).subscribe(observer);
+
+	/* Unsubscribe to prevent memory leak */
+	setTimeout(() => subscription.unsubscribe(), 5000);
+	
+</script>
+</body>
+</html>

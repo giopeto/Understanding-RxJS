@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RxJS Basics</title>
+</head>
+<body>
+	<button>Click me</button>
+<script type="text/javascript" src="https://unpkg.com/@reactivex/rxjs@5.0.0-beta.12/dist/global/Rx.js"></script>
+<script type="text/javascript">
+	
+	const button = document.querySelector('button');
+
+	/*Vanilla javascript
+	button.addEventListener('click', event => {
+		console.log(event);
+	});
+	*/
+	Rx.Observable.fromEvent(button, 'click')
+		.subscribe(event => console.log(event));
+
+	/* Separate observer form subscriber */
+	/* throttleTime: Emit latest value when specified duration has passed.*/
+	const observable = Rx.Observable.fromEvent(button, 'click')
+		.throttleTime(1000);
+	
+	observable
+		/* Print x mouse coordinate */
+		.map(data => data.clientX)
+		.subscribe(coordinate => console.log(coordinate));
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RxJS scan() vs reduce()</title>
+</head>
+<body>
+	<input type="text" name="input">
+<script type="text/javascript" src="https://unpkg.com/@reactivex/rxjs@5.0.0-beta.12/dist/global/Rx.js"></script>
+
+<script type="text/javascript">
+
+    const numberArray = [1, 2, 3, 4, 5, 6];
+    const observable = Rx.Observable.of(1, 2, 3, 4, 5, 6);
+
+    observable
+        .reduce((total, currentValue) => total + currentValue)
+        .subscribe({
+            next: value => console.log('reduce() value: ', value)
+        });
+
+    observable
+        .scan((total, currentValue) => total + currentValue)
+        .subscribe({
+            next: value => console.log('scan() value: ', value)
+        });
+
+    /* JS reduce function*/
+    const arraySum = numberArray.reduce((total, currentValue) => total + currentValue);
+    console.log('JS reduce: ', arraySum);
+
+    /* 
+        RxJS scan() is same as reduce() but pass total for all iteration to subscribe method.
+        reduce() pass only the final result.
+    */
+
+</script>
+</body>
+</html>

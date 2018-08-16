@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RxJS scan() vs reduce()</title>
+</head>
+<body>
+    <p>mergeMap()</p>
+    <hr />
+    <input type="text" id="input1">
+    <input type="text" id="input2">
+        
+    <p>Combined value: <span></span></p>
+    
+    <p>switchMap()</p>
+    <hr />
+    <button>Click me</button>
+    
+<script type="text/javascript" src="https://unpkg.com/@reactivex/rxjs@5.0.0-beta.12/dist/global/Rx.js"></script>
+
+<script type="text/javascript">
+    /* Merge map*/
+    var input1 = document.querySelector('#input1');
+    var input2 = document.querySelector('#input2');
+
+    var span = document.querySelector('span');
+
+    var obs1 = Rx.Observable.fromEvent(input1, 'input');
+    var obs2 = Rx.Observable.fromEvent(input2, 'input');
+
+    obs1.mergeMap(
+        event1 => {
+        return obs2.map(
+            event2 => event1.target.value + ' ' + event2.target.value
+        )
+    }
+    ).subscribe(
+        combinedValue => span.textContent = combinedValue
+    );
+
+    /* Switch map*/
+    var button = document.querySelector('button');
+
+    var switchMapObs1 = Rx.Observable.fromEvent(button, 'click');
+    var switchMapObs2 = Rx.Observable.interval(1000);
+
+    switchMapObs1.switchMap(
+        event => {
+        return switchMapObs2
+    }
+    ).subscribe(
+        (value) => console.log(value)
+    );
+
+    /*
+        Switch map allow chain two observable, but after first observable fire event second observer stopped and started again.
+    */
+</script>
+</body>
+</html>
